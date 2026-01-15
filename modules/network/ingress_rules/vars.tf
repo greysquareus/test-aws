@@ -10,3 +10,11 @@ variable "cidr_ingress" {
 variable "sg_id" {
   type = string
 }
+
+variable "common_tags" {
+  type = map
+}
+
+variable "environment" {
+  type = string
+}

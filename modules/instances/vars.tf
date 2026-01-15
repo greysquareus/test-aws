@@ -9,3 +9,7 @@ variable "ubuntu_ami" {
 variable "environment" {
   type = string
 }
+
+variable "common_tags" {
+  type = map
+}
