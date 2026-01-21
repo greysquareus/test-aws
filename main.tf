@@ -8,6 +8,7 @@ module "instances" {
   ubuntu_ami = module.datasources.ubuntu_id
   environment = var.environment
   common_tags = var.common_tags
+  sec_group = module.sec_group.sg_id
 }
 
 module "datasources" {
