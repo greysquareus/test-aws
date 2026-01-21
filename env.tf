@@ -32,6 +32,7 @@ variable "egress_rules" {
 variable "common_tags" {
   type = map(string)
   default = {
-    Owner  = "Greysquare"
+    Owner   = "Greysquare"
+    Project = "Zemphius"
   }
 }

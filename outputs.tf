@@ -1,6 +1,7 @@
 output "instance_summary" {
   value = [
     for inst in module.instances.instance_details : {
+      name = inst.tags["instance"]
       id   = inst.id
       ip   = inst.public_ip
       az   = inst.availability_zone

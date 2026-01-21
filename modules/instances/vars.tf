@@ -11,7 +11,7 @@ variable "environment" {
 }
 
 variable "common_tags" {
-  type = map
+  type = map(any)
 }
 
 variable "sec_group" {

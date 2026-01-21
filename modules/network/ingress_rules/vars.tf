@@ -1,6 +1,5 @@
 variable "allow_ports" {
-  type    = list(any)
-  default = [22, 80, 443]
+  type = list(any)
 }
 
 variable "cidr_ingress" {
@@ -12,7 +11,7 @@ variable "sg_id" {
 }
 
 variable "common_tags" {
-  type = map
+  type = map(any)
 }
 
 variable "environment" {

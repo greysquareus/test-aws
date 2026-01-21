@@ -7,7 +7,7 @@ variable "sg_id" {
 }
 
 variable "common_tags" {
-  type = map
+  type = map(any)
 }
 
 variable "environment" {

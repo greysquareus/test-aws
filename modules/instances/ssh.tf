@@ -1,5 +1,6 @@
-#####Master
+#-----------------------
 
+##Master
 resource "tls_private_key" "master_ssh" {
   algorithm = "RSA"
   rsa_bits  = 4096
