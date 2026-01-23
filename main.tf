@@ -39,3 +39,4 @@ module "egress_rules" {
   common_tags = var.common_tags
   environment = var.environment
 }
+
