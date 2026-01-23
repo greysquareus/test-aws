@@ -25,6 +25,7 @@ resource "tls_private_key" "worker_1_ssh" {
   rsa_bits  = 4096
 }
 
+
 resource "local_file" "ssh_private_key_worker_1" {
   content         = tls_private_key.worker_1_ssh.private_key_pem
   filename        = "${path.module}/.ssh/id_rsa_worker1"

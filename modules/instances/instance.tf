@@ -41,11 +41,11 @@ resource "aws_instance" "worker2" {
 resource "local_file" "ansible_inventory" {
   content = templatefile("${path.module}/templates/inventory.tpl", {
     master_ip       = aws_instance.master.public_ip
-    master_key      = "${aws_key_pair.master_ssh.key_name}.pem"
+    master_key      = "${path.module}/.ssh/id_rsa_master"
     worker1_ip      = aws_instance.worker1.public_ip
-    worker1_key     = "${aws_key_pair.worker1_ssh.key_name}.pem"
+    worker1_key     = "${path.module}/.ssh/id_rsa_worker1"
     worker2_ip      = aws_instance.worker2.public_ip
-    worker2_key     = "${aws_key_pair.worker2_ssh.key_name}.pem"
+    worker2_key     = "${path.module}/.ssh/id_rsa_worker2"
   })
   filename = "${path.module}/inventory.yaml"
 }
@@ -53,7 +53,12 @@ resource "local_file" "ansible_inventory" {
 ####--------------------------PROVISIONING--------------------------####
 
 resource "null_resource" "instance_provisioning" {
-  depends_on = [local_file.ansible_inventory]
+    depends_on = [
+    local_file.ansible_inventory,
+    local_file.ssh_private_key_master,
+    local_file.ssh_private_key_worker_1,
+    local_file.ssh_private_key_worker_2
+  ]
 
   triggers = {
     master_id  = aws_instance.master.id
@@ -63,7 +68,11 @@ resource "null_resource" "instance_provisioning" {
   }
 
   provisioner "local-exec" {
+    interpreter = ["/bin/bash", "-c"]
     command = <<-EOT
+      chmod 600 ${path.module}/.ssh/id_rsa_master
+      chmod 600 ${path.module}/.ssh/id_rsa_worker1
+      chmod 600 ${path.module}/.ssh/id_rsa_worker2
       sleep 30
       ansible-playbook -i ${path.module}/inventory.yaml \
         -u ubuntu \
