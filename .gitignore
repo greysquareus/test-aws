@@ -8,4 +8,6 @@
 *.tfvars.json
 terraform*
 *.ssh/
+
 invent*
+inventory.yaml
