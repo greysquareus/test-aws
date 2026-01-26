@@ -24,3 +24,40 @@
         name: nginx
         state: started
         enabled: yes
+
+- name: Deploy website from GitHub
+  hosts: workers
+  become: yes
+
+  vars:
+    repo_url: "https://github.com/greysquareus/my-site1"
+    dest_path: "/var/www/html"
+
+  tasks:
+    - name: Install git
+      ansible.builtin.apt:
+        name: git
+        state: present
+        update_cache: yes
+    
+    - name: Remove default nginx files
+      ansible.builtin.file:
+        path: "/var/www/html/index.nginx-debian.html"
+        state: absent
+
+    - name: Clone repository to web root
+      ansible.builtin.git:
+        repo: "{{ repo_url }}"
+        dest: "{{ dest_path }}"
+        version: main
+        force: yes
+      register: git_result
+
+    - name: Set ownership and permissions for web files
+      ansible.builtin.file:
+        path: "{{ dest_path }}"
+        state: directory
+        recurse: yes
+        owner: www-data
+        group: www-data
+        mode: '0755'

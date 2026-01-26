@@ -8,3 +8,4 @@
 *.tfvars.json
 terraform*
 *.ssh/
+invent*

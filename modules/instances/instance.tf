@@ -69,14 +69,13 @@ resource "null_resource" "instance_provisioning" {
 
   provisioner "local-exec" {
     interpreter = ["/bin/bash", "-c"]
-    command = <<-EOT
-      chmod 600 ${path.module}/.ssh/id_rsa_master
-      chmod 600 ${path.module}/.ssh/id_rsa_worker1
-      chmod 600 ${path.module}/.ssh/id_rsa_worker2
-      sleep 30
-      ansible-playbook -i ${path.module}/inventory.yaml \
+    command = <<EOT
+        sleep 30
+        ansible-playbook -i modules/instances/inventory.yaml \
         -u ubuntu \
-        ${path.module}/scripts/provision.yml
+        --private-key modules/instances/.ssh/id_rsa_master \
+        --ssh-common-args='-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null' \
+        modules/instances/scripts/provision.yml
     EOT
   }
 }

@@ -15,4 +15,5 @@ variable "common_tags" {
 }
 
 variable "sec_group" {
+  type = string
 }

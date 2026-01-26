@@ -8,7 +8,7 @@ resource "tls_private_key" "master_ssh" {
 
 resource "local_file" "ssh_private_key_master" {
   content         = tls_private_key.master_ssh.private_key_pem
-  filename        = "${path.module}/.ssh/id_rsa_master"
+  filename        = "${path.module}/.ssh/id_rsa_master.pem"
   file_permission = "0600"
 }
 
@@ -28,7 +28,7 @@ resource "tls_private_key" "worker_1_ssh" {
 
 resource "local_file" "ssh_private_key_worker_1" {
   content         = tls_private_key.worker_1_ssh.private_key_pem
-  filename        = "${path.module}/.ssh/id_rsa_worker1"
+  filename        = "${path.module}/.ssh/id_rsa_worker1.pem"
   file_permission = "0600"
 }
 
@@ -47,7 +47,7 @@ resource "tls_private_key" "worker_2_ssh" {
 
 resource "local_file" "ssh_private_key_worker_2" {
   content         = tls_private_key.worker_2_ssh.private_key_pem
-  filename        = "${path.module}/.ssh/id_rsa_worker2"
+  filename        = "${path.module}/.ssh/id_rsa_worker2.pem"
   file_permission = "0600"
 }
 
